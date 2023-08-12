@@ -38,16 +38,19 @@ section#login {
     height: 500px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px #00000075;
+
+    transition: width .3s, height .3s;
+    transition-timing-function: ease;
 }
 
-section#login div#imagem {
+section#login > div#imagem {
     display: block;
-    background: var(--lilas) url("../imagens/dog.jpeg") no-repeat bottom center;
+    background: var(--lilas) url("../imagens/background.jpeg") no-repeat bottom center;
     background-size: cover;
     height: 200px;
 }
 
-section#login div#formulario {
+section#login > div#formulario {
     display: block;
     padding: 10px;
 }
