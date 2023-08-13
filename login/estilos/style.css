@@ -4,7 +4,7 @@
 
 :root {
     --verde: #49a09d;
-    --verde-claro: #6ae4e0;
+    --verde-claro: #a1fffc;
     --verde-escuro: #295857;
     --lilas: #5f2c82;
 }
@@ -18,6 +18,7 @@
 
 html, body {
     background-color: var(--lilas);
+    background-repeat: no-repeat;
     height: 100vh;
     width: 100vw;
 }
@@ -32,15 +33,15 @@ section#login {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     overflow: hidden;
 
     background-color: white;
     width: 250px;
-    height: 500px;
+    height: 490px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px #00000075;
 
+    transform: translate(-50%, -50%);
     transition: width .3s, height .3s;
     transition-timing-function: ease;
 }
@@ -64,6 +65,7 @@ div#formulario > h1 {
 
 div#formulario > p {
     font-size: .8em;
+    margin-bottom: 10px;
 }
 
 form > div.campo {
@@ -71,8 +73,37 @@ form > div.campo {
     width: 100%;
     height: 40px;
     margin: 5px 0px;
+    border-radius: 8px;
+    border: 2px solid var(--lilas);
     background-color: var(--lilas);
-    border-radius: 5px;
+}
+
+form > div.campo > span {
+    color: white;
+    font-size: 2em;
+    width: 40px;
+    padding: 5px;
+    transform: translateY(-3px);
+}
+
+form > div.campo > input {
+    background-color: var(--verde-claro);
+    font-size: 1em;
+    width: calc(100% - 45px);
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 4px;
+    transform: translateY(-12px);
+}
+
+form > div.campo > input::placeholder {
+    color: var(--lilas);
+}
+
+form > div.campo > input:focus-within {
+    background-color: white;
+    outline-style: none;
 }
 
 form > div.campo > label {
@@ -95,6 +126,11 @@ form > input[type=submit]:hover {
     background-color: var(--verde-escuro);
 }
 
+form > input[type=submit]:focus-within {
+    background-color: var(--verde-escuro);
+    outline: none;
+}
+
 form > a.botao {
     display: block;
     text-align: center;
@@ -112,6 +148,11 @@ form > a.botao {
 
 form > a.botao:hover {
     background-color: var(--verde-claro);
+}
+
+form > a.botao:focus-within {
+    background-color: var(--verde-claro);
+    outline: none;
 }
 
 form > a.botao > span {
