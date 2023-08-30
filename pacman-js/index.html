@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacman</title>
+    <style>
+        @font-face {
+            font-family: "Emulogic";
+            src: url(fonts/emulogic.ttf) format("truetype");
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0px;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        div {
+            display: none;
+        }
+
+        canvas#canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        button#bPlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            color: white;           
+            border: 2px solid white;
+            font-weight: 900;
+            background-color: #342DCA;
+        }
+        
+        button#bPlay:hover {
+            background-color: #3e35ec;
+            transition: .2s;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="420" height="500"></canvas>
+    <div>
+        <img id="animations" src="images/animations.gif">
+        <img id="ghosts" src="images/ghost.png">
+    </div>
+
+    <button id="bPlay" onclick="start()" type="button">PLAY</button>
+
+    <script src="scripts/pacman.js"></script>
+    <script src="scripts/ghost.js"></script>
+    <script src="scripts/game.js"></script>
+</body>
+</html>
