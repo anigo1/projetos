@@ -126,13 +126,12 @@ function gameLoop() {
 }
 
 function start() {
-    gameInterval = setInterval(gameLoop, 1000/fps);
     resetMap();
     createPacman();
     createGhosts();
-    gameLoop();
     pacman_beginning.play();
     bPlay.style.display = "none";
+    gameInterval = setInterval(gameLoop, 1000/fps);
 }
 
 function update() {
