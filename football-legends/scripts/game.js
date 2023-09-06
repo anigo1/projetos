@@ -12,32 +12,32 @@ cnv.width = DEVICE_WIDTH;
 cnv.height = DEVICE_HEIGHT;
 
 // Object Settings
-let menu = new Countainer(0, 0, 300, cnv.height, "black");
-let bPlay = new Button("Play", 0, 0, menu.width, 30);
+let menu = new Countainer(0, 0, 300, cnv.height, "blue");
+let bPlay = new Button("Play", menu.x, 0, menu.width, 80);
+let Ibrahimovic = new Imagem("media/images/Ibrahimovic.png");
 
 // default settings
 function setDefaultSettings() {
-    console.log("width: " + cnv.width + ", height: " + cnv.height);
     bPlay.background.color = "red";
 }
 
 // Game Functions
 function start() {
+    //drawLoading();
     //drawIntro();
     gameInterval = setInterval(loop, 1000/fps);
 }
 
 function draw() {
-    fillCanvas("blue");
-    createText("Bem-Vindo!", px, cnv.height/2);
-    menu.draw();
-    bPlay.draw();
+    fillCanvas();
+    createText("Bem-Vindo!", cnv.width/2, cnv.height/2);
+    drawMenu();
+    Ibrahimovic.draw();
 }
 
 function update() {
     if(previewedIntro) {
-        console.log("Terminou");
-        px += 10;
+        console.log("Terminou Intro");
     }
 }
 
@@ -51,59 +51,58 @@ function fillCanvas(color) {
     creatRect(0, 0, cnv.width, cnv.height, color || "black");
 }
 
+function drawLoading() {
+    let progressBar = new ProgressBar(30, cnv.height-50, cnv.width-60, 20);
+
+    conditionalAnimation(
+        function() {
+            progressBar.progress++;
+            fillCanvas();
+            progressBar.update();
+            progressBar.draw();
+            createText(
+                "Carregando " + Number.parseInt(progressBar.progress) + "%" ,
+                progressBar.x,
+                progressBar.y-25,
+                "",
+                "left",
+                "top"
+            );
+        },
+        function() {
+            drawIntro();
+        },
+        function() { return progressBar.progress >= 100 }
+    );
+}
+
 function drawIntro() {
-    let time = getTime();
-    let textTrasparence = 0;
-    let intro = setInterval(() => {
-        textTrasparence += 0.005;
-        fillCanvas();
-        createText(
-            "Football Legends",
-            cnv.width/2,
-            cnv.height/2,
-            "rgba(255, 255, 255, " + textTrasparence + ")"
-        );
-        if(getTime() - time >= 4000) {
-            clearInterval(intro);
+    let trasparence = 0;
+    timedAnimation(
+        function() {
+            trasparence += 0.005;
+            fillCanvas();
+            createText(
+                "Football Legends",
+                cnv.width/2,
+                cnv.height/2,
+                "rgba(255, 255, 255, " + trasparence + ")"
+            );
+        },
+        function() {
             previewedIntro = true;
             gameInterval = setInterval(loop, 1000/fps);
-        }
-    }, 1000/fps);
+        },
+        4 // Tempo da animação
+    );
 }
 
 function drawMenu() {
     // Background
-}
-
-// Objects
-class Player {
-    constructor(x, y, width, speed, color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.speed = speed;
-        this.speedX = this.speed;
-        this.speedY = this.speed;
-        this.color = color || "red";
-    }
-
-    draw() {
-        creatBall(this.x, this.y, this.radius, this.color);
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.collision();
-    }
-
-    collision() {
-        if(this.x < 0 || this.x >= cnv.width) this.speedX *= -1;
-        if(this.y < 0 || this.y >= cnv.height) this.speedY *= -1;
-    }
+    menu.draw();
+    bPlay.draw();
 }
 
 // Start Game
 setDefaultSettings();
-let px = cnv.width/2;
 start();
