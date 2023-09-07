@@ -9,29 +9,38 @@ function getTime() {
     callback: Faça quando terminar o 'time'
     time: Tempo de animação em segundos
 */
-function timedAnimation(doIt, callback, time) {
+function timedAnimation(loop, onfinish, time) {
     let startTime = getTime();
     let interval = setInterval(() => {
-        doIt();
+        loop();
         if(getTime() - startTime >= time * 1000) {
             clearInterval(interval);
-            callback();
+            onfinish();
         }
     }, 1000/fps);
 }
 
 /*
-    doIt: Faça isso durante a 'condition'
-    callback: Faça quando terminar a 'condition'
-    condition: Condiçao de animação (function)
+    loop: Faça isso durante a 'condition'
+    onfinish: Faça quando terminar a 'condition'
+    condition: Condiçao de animação (function que retorna um Boolean)
 */
-function conditionalAnimation(doIt, callback, condition) {
+function conditionalAnimation(loop, onfinish, condition) {
     let interval = setInterval(() => {
-        doIt();
-        console.log(condition);
+        loop();
         if(condition()) {
             clearInterval(interval);
-            callback();
+            onfinish();
+        }
+    }, 1000/fps);
+}
+
+function teste(loop, onfinish, condition) {
+    let interval = setInterval(() => {
+        loop();
+        if(condition()) {
+            clearInterval(interval);
+            onfinish();
         }
     }, 1000/fps);
 }
@@ -82,7 +91,10 @@ function creatImage(src, x, y, width, height, dX, dY, dWidth, dHeight) {
     }
 }
 
-function playAudio() {
-    // Todo
-    
+function loadAudio(src) {
+    let audio = new Audio();
+    audio.src = src;
+    audio.load();
+    audio.volume = 0.2;
+    return audio;
 }
