@@ -21,9 +21,6 @@ let menu = new Countainer(0, 0, 300, cnv.height, "rgba(0, 0, 0, .5)");
 let bPlay = new Button("Jogar", menu.x, cnv.height/2-80, menu.width, 80);
 let bSettings = new Button("Configurações", menu.x, cnv.height/2, menu.width, 80);
 
-let introBackground = new Imagem("media/images/intro-background.jpg", 0, 0, cnv.width, cnv.height);
-let menuBackground = new Imagem("media/images/menu-background.jpg", 0, 0, cnv.width, cnv.height);
-let Ibrahimovic = new Imagem("media/images/Ibrahimovic.png", cnv.width-550, 32, 550, 650);
 let music = loadAudio("media/audio/Here it Comes - TrackTribe.mp3");
 
 // default settings
@@ -41,10 +38,9 @@ function start() {
 }
 
 function draw() {
-    menuBackground.draw();
+    fillCanvas();
     createText("Bem-Vindo!", cnv.width/2, cnv.height/2);
     drawMenu();
-    Ibrahimovic.draw();
 }
 
 function update() {
@@ -89,7 +85,7 @@ function drawLoading() {
 
 function drawIntro() {
     let trasparence = 0;
-    let texto = new Texto("Soccer Legends", cnv.width/2, cnv.height/2);
+    let texto = new Texto("Dama Legends", cnv.width/2, cnv.height/2);
 
     let animation = new Animacao();
     animation.loop = function() {
@@ -124,7 +120,7 @@ function drawPressStart() {
         if(trasparence <= .2) {
             showText = true;
         }
-        introBackground.draw();
+        fillCanvas();
         texto.color = "rgba(255, 255, 255, " + trasparence + ")";
         texto.draw();
     };
