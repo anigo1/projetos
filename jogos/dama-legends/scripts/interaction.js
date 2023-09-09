@@ -2,20 +2,32 @@
 const body = document.getElementsByTagName("body")[0];
 
 // Mouse Postions
-let mouseScreenPosition = { x: 0, y: 0 }
+let mouse = {
+    x: 0,
+    y: 0,
+    clicked: false
+}
+let mouseScreen = { x: 0, y: 0 }
 
-let mouseCnvPosition = { x : 0, y: 0 }
-
-// Mouse
+// MOUSE
 window.onmousemove = (e) => {
     // Todo
-    mouseScreenPosition.x = e.clientX;
-    mouseScreenPosition.y = e.clientY;
+    mouseScreen.x = e.clientX;
+    mouseScreen.y = e.clientY;
 
-    mouseCnvPosition.x = (mouseScreenPosition.x - cnv.getClientRects().item(0).x) * (cnv.width/cnv.getClientRects().item(0).width);
-    mouseCnvPosition.y = (mouseScreenPosition.y - cnv.getClientRects().item(0).y) * (cnv.height/cnv.getClientRects().item(0).height);
+    mouse.x = (mouseScreen.x - cnv.getClientRects().item(0).x) * (cnv.width/cnv.getClientRects().item(0).width);
+    mouse.y = (mouseScreen.y - cnv.getClientRects().item(0).y) * (cnv.height/cnv.getClientRects().item(0).height);
 }
 
+cnv.onmousedown = (e) => {
+    mouse.clicked = true;
+}
+
+cnv.onmouseup = (e) => {
+    mouse.clicked = false;
+}
+
+// KEYBOARD
 document.onkeydown = (e) => {
     keyPressed = e.key;
 }

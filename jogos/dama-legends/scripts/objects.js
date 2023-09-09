@@ -1,10 +1,11 @@
 class Countainer {
     constructor(x, y, width, height, color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this.x = x || 0;
+        this.y = y || 0;
+        this.width = width || 50;
+        this.height = height || 50;
         this.color = color || "gray";
+        this.gradient = ctx.createLinearGradient(this.x, this.y, this.width, this.height);
     }
 
     draw() {
@@ -12,6 +13,21 @@ class Countainer {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.restore();
+    }
+
+    draGradient() {
+        ctx.save();
+        ctx.fillStyle = this.gradient;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.restore();
+    }
+
+    addGradient(x0, y0, x1, y1) {
+        this.gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+    }
+
+    addGradientColor(number, color) {
+        this.addGradient.addColorStop(number, color);
     }
 }
 
@@ -44,36 +60,19 @@ class Button {
     constructor(text, x, y, width, height, color) {
         this.background = new Countainer();
         this.text = new Texto(text);
-        this.backgroundColor = "gray";
         this.background.x = x;
         this.background.y = y;
         this.background.width = width;
         this.background.height = height;
         this.text.color = color || "white";
         this.text.size = 20;
-        this.selected = false;
-        this.selectedColor = "rgba(0, 0, 0, .6)";
     }
 
     draw() {
-        if(this.selected) {
-            creatRect(this.background.x, this.background.y, this.background.width, this.background.height, this.selectedColor)
-        } else {
-            this.background.draw();
-        }
+        this.background.draw();
         this.text.x = this.background.x + (this.background.width/2);
         this.text.y = this.background.y + (this.background.height/2);
         this.text.draw();
-    }
-
-    update() {
-        let testeX = mouseCnvPosition.x > this.background.x && mouseCnvPosition.x < this.background.x + this.background.width;
-        let testeY = mouseCnvPosition.y > this.background.y && mouseCnvPosition.y < this.background.y + this.background.height;
-        if(testeX && testeY) {
-            this.selected = true;
-        } else {
-            this.selected = false;
-        }
     }
 }
 
@@ -89,12 +88,9 @@ class ProgressBar {
     }
 
     draw() {
+        this.frontBar.width = this.progress * (this.width/100);
         this.backBar.draw();
         this.frontBar.draw();
-    }
-
-    update() {
-        this.frontBar.width = this.progress * (this.width/100);
     }
 }
 
@@ -156,11 +152,14 @@ class Animacao {
     }
 
     stop() {
-        this.startTime = undefined;
         clearInterval(this.interval);
     }
 
     setTimeout(time) { // Tempo de animaçao em segundos
         this.condition = function() { return getTime() - this.startTime >= time * 1000; };
+    }
+
+    getElapsedTime() {
+        return (getTime() - this.startTime)/1000;
     }
 }

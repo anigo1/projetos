@@ -14,14 +14,25 @@ cnv.height = HD.height;
 let fps = 60;
 let gameAnimation = new Animacao();
 let keyPressed = undefined;
-let dataLength = 0;
+let blocSize = 50;
+let map = [
+    [1,0,1,0,1,0,1,0],
+    [0,1,0,1,0,1,0,1],
+    [1,0,1,0,1,0,1,0],
+    [0,1,0,1,0,1,0,1],
+    [1,0,1,0,1,0,1,0],
+    [0,1,0,1,0,1,0,1],
+    [1,0,1,0,1,0,1,0],
+    [0,1,0,1,0,1,0,1],
+];
 
 // Object Settings
-let menu = new Countainer(0, 0, 300, cnv.height, "rgba(0, 0, 0, .5)");
+let menu = new Countainer(0, 0, 300, cnv.height, "rgba(50, 50, 50, .5)");
 let bPlay = new Button("Jogar", menu.x, cnv.height/2-80, menu.width, 80);
 let bSettings = new Button("Configurações", menu.x, cnv.height/2, menu.width, 80);
 
-let music = loadAudio("media/audio/Here it Comes - TrackTribe.mp3");
+// Load Request
+let music = loadAudio("media/audios/Here it Comes - TrackTribe.mp3");
 
 // default settings
 function setDefaultSettings() {
@@ -44,8 +55,7 @@ function draw() {
 }
 
 function update() {
-    bPlay.update();
-    bSettings.update();
+    // Todo
 }
 
 function loop() {
@@ -65,7 +75,6 @@ function drawLoading() {
     animation.loop = function() {
         progressBar.progress++;
         fillCanvas();
-        progressBar.update();
         progressBar.draw();
         texto.text = "Carregando " + Number.parseInt(progressBar.progress) + "%";
         texto.x = progressBar.x;
@@ -95,6 +104,7 @@ function drawIntro() {
         texto.draw();
     }
     animation.onfinish = function() {
+        console.log(animation.getElapsedTime());
         drawPressStart();
     }
     animation.setTimeout(4);
@@ -102,12 +112,16 @@ function drawIntro() {
 }
 
 function drawPressStart() {
+    let animation = new Animacao();
+    let namegame = new Texto("Dama Legends", cnv.width/2, cnv.height/2);
+    let texto = new Texto("Pressione qualquer tecla", cnv.width/2, cnv.height-100);
     let speedAnimation = 0.012;
     let trasparence = 0;
     let showText = true;
-    let texto = new Texto("Pressione qualquer tecla", cnv.width/2, cnv.height-100);
+    namegame.size = 90;
+    namegame.fontFamily = "Cinzel";
     texto.size = 30;
-    let animation = new Animacao();
+    
     animation.loop = function() {
         if(showText) {
             trasparence += speedAnimation;
@@ -121,7 +135,9 @@ function drawPressStart() {
             showText = true;
         }
         fillCanvas();
+        createLinearGradient(0,0,cnv.width, cnv.height);
         texto.color = "rgba(255, 255, 255, " + trasparence + ")";
+        namegame.draw();
         texto.draw();
     };
     animation.onfinish = function() {
@@ -140,6 +156,13 @@ function drawMenu() {
     bSettings.draw();
 }
 
+function drawGame() {
+    fillCanvas();
+    for(let i=0; i<map.length; i++) {
+        console.log(map[i]);
+    }
+}
+
 // Start Game
 setDefaultSettings();
-drawLoading();
+drawPressStart();

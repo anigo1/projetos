@@ -91,6 +91,20 @@ function creatImage(src, x, y, width, height, dX, dY, dWidth, dHeight) {
     }
 }
 
+function createLinearGradient(x1, y1, x2, y2) {
+    const gradient = ctx.createLinearGradient(0, 0, cnv.width, cnv.height);
+
+    // Add three color stops
+    gradient.addColorStop(0, "purple");
+    gradient.addColorStop(0.5, "cyan");
+    gradient.addColorStop(1, "purple");
+
+    // Set the fill style and draw a rectangle
+    ctx.fillStyle = gradient;
+    ctx.fillRect(x1, y1, x2, y2);
+}
+
+
 function loadAudio(src) {
     let audio = new Audio();
     audio.src = src;
