@@ -5,7 +5,6 @@ class Countainer {
         this.width = width || 50;
         this.height = height || 50;
         this.color = color || "gray";
-        this.gradient = ctx.createLinearGradient(this.x, this.y, this.width, this.height);
     }
 
     draw() {
@@ -14,20 +13,29 @@ class Countainer {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.restore();
     }
+}
 
-    draGradient() {
-        ctx.save();
-        ctx.fillStyle = this.gradient;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.restore();
+class Gradiente {
+    constructor(x, y, width, height) {
+        this.background = new Countainer(x, y,width, height);
+        this.gradient = ctx.createLinearGradient(x, 0, width, 0);
     }
 
-    addGradient(x0, y0, x1, y1) {
-        this.gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+    draw() {
+        this.background.color = this.gradient;
+        this.background.draw();
     }
 
-    addGradientColor(number, color) {
-        this.addGradient.addColorStop(number, color);
+    linearGradient(x0, y0, x1, x2) {
+        this.gradient = ctx.createLinearGradient(x0, y0, x1, x2);
+    }
+
+    radialGradient(x1, y1, r1, x2, y2, r2) {
+        this.gradient = ctx.createRadialGradient(x1, y1, r1, x2, y2, r2);
+    }
+    
+    addColorStop(percentStop, color) {
+        this.gradient.addColorStop(percentStop, color);
     }
 }
 

@@ -7,6 +7,8 @@ const DEVICE = { width: window.screen.width, height: window.screen.height }
 const SD = { width: 720, height: 480}
 const HD = { width: 1280, height: 720 }
 const FHD = { width: 1920, height: 1080 }
+cnv.x = 0;
+cnv.y = 0;
 cnv.width = HD.width;
 cnv.height = HD.height;
 
@@ -112,6 +114,7 @@ function drawIntro() {
 }
 
 function drawPressStart() {
+    let background = new Imagem("media/images/background.png", 0, 0, cnv.width, cnv.height);
     let animation = new Animacao();
     let namegame = new Texto("Dama Legends", cnv.width/2, cnv.height/2);
     let texto = new Texto("Pressione qualquer tecla", cnv.width/2, cnv.height-100);
@@ -134,8 +137,7 @@ function drawPressStart() {
         if(trasparence <= .2) {
             showText = true;
         }
-        fillCanvas();
-        createLinearGradient(0,0,cnv.width, cnv.height);
+        background.draw();
         texto.color = "rgba(255, 255, 255, " + trasparence + ")";
         namegame.draw();
         texto.draw();
@@ -150,7 +152,6 @@ function drawPressStart() {
 }
 
 function drawMenu() {
-    // Background
     menu.draw();
     bPlay.draw();
     bSettings.draw();
@@ -158,11 +159,8 @@ function drawMenu() {
 
 function drawGame() {
     fillCanvas();
-    for(let i=0; i<map.length; i++) {
-        console.log(map[i]);
-    }
 }
 
 // Start Game
 setDefaultSettings();
-drawPressStart();
+drawGame();
