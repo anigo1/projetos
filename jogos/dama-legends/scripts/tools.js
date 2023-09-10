@@ -35,16 +35,6 @@ function conditionalAnimation(loop, onfinish, condition) {
     }, 1000/fps);
 }
 
-function teste(loop, onfinish, condition) {
-    let interval = setInterval(() => {
-        loop();
-        if(condition()) {
-            clearInterval(interval);
-            onfinish();
-        }
-    }, 1000/fps);
-}
-
 // Auxílio de Desenho
 function createText(text, x, y, color, align, baseline, font) {
     ctx.save();
@@ -56,14 +46,14 @@ function createText(text, x, y, color, align, baseline, font) {
     ctx.restore();
 }
 
-function creatRect(x, y, width, height, color) {
+function createRect(x, y, width, height, color) {
     ctx.save();
     ctx.fillStyle = color || "black";
     ctx.fillRect(x, y, width, height);
     ctx.restore();
 }
 
-function creatCircle(x, y, radius, color) {
+function createCircle(x, y, radius, color) {
     ctx.save();
     ctx.fillStyle = color || "red";
     ctx.arc(x, y, radius, 0, Math.PI*2);
@@ -71,7 +61,7 @@ function creatCircle(x, y, radius, color) {
     ctx.restore();
 }
 
-function creatImage(src, x, y, width, height, dX, dY, dWidth, dHeight) {
+function createImage(src, x, y, width, height, dX, dY, dWidth, dHeight) {
     let image = new Image();
     image.src = src;
     image.onload = function() {

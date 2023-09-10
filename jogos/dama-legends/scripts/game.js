@@ -16,7 +16,7 @@ cnv.height = HD.height;
 let fps = 60;
 let gameAnimation = new Animacao();
 let keyPressed = undefined;
-let blocSize = 50;
+let blockSize = 60;
 let map = [
     [1,0,1,0,1,0,1,0],
     [0,1,0,1,0,1,0,1],
@@ -25,21 +25,21 @@ let map = [
     [1,0,1,0,1,0,1,0],
     [0,1,0,1,0,1,0,1],
     [1,0,1,0,1,0,1,0],
-    [0,1,0,1,0,1,0,1],
+    [0,1,0,1,0,1,0,1]
 ];
 
 // Object Settings
-let menu = new Countainer(0, 0, 300, cnv.height, "rgba(50, 50, 50, .5)");
-let bPlay = new Button("Jogar", menu.x, cnv.height/2-80, menu.width, 80);
-let bSettings = new Button("Configurações", menu.x, cnv.height/2, menu.width, 80);
+let bPlay = new Button("Jogar", 0, cnv.height/2-80, cnv.width/3, 80);
+let bSettings = new Button("Configurações", 0, cnv.height/2, cnv.width/3, 80);
 
 // Load Request
+let background = new Imagem("media/images/background.png", 0, 0, cnv.width, cnv.height);
 let music = loadAudio("media/audios/Here it Comes - TrackTribe.mp3");
 
 // default settings
 function setDefaultSettings() {
-    bPlay.background.color = "rgb(10, 50, 200)";
-    bSettings.background.color = "rgb(10, 50, 200)";
+    bPlay.background.color = "#111";
+    bSettings.background.color = "#111";
 }
 
 // Game Functions
@@ -51,9 +51,11 @@ function start() {
 }
 
 function draw() {
-    fillCanvas();
-    createText("Bem-Vindo!", cnv.width/2, cnv.height/2);
-    drawMenu();
+    drawGame(
+        cnv.width/2 - (blockSize*8/2),
+        cnv.height/2 - (blockSize*8/2),
+        blockSize
+    );
 }
 
 function update() {
@@ -67,7 +69,7 @@ function loop() {
 
 // Draws
 function fillCanvas(color) {
-    creatRect(0, 0, cnv.width, cnv.height, color || "black");
+    createRect(0, 0, cnv.width, cnv.height, color || "black");
 }
 
 function drawLoading() {
@@ -106,7 +108,6 @@ function drawIntro() {
         texto.draw();
     }
     animation.onfinish = function() {
-        console.log(animation.getElapsedTime());
         drawPressStart();
     }
     animation.setTimeout(4);
@@ -114,7 +115,6 @@ function drawIntro() {
 }
 
 function drawPressStart() {
-    let background = new Imagem("media/images/background.png", 0, 0, cnv.width, cnv.height);
     let animation = new Animacao();
     let namegame = new Texto("Dama Legends", cnv.width/2, cnv.height/2);
     let texto = new Texto("Pressione qualquer tecla", cnv.width/2, cnv.height-100);
@@ -143,7 +143,7 @@ function drawPressStart() {
         texto.draw();
     };
     animation.onfinish = function() {
-        start();
+        drawMenu();
         music.loop = true;
         music.play();
     };
@@ -152,15 +152,61 @@ function drawPressStart() {
 }
 
 function drawMenu() {
-    menu.draw();
-    bPlay.draw();
-    bSettings.draw();
+    let animation = new Animacao();
+    animation.loop = function() {
+        background.draw();
+        bPlay.draw();
+        bSettings.draw();
+    };
+    animation.onfinish = function() {
+        start();
+    };
+    animation.condition = function() {
+        return bPlay.clicked;
+    }
+    animation.play();
 }
 
-function drawGame() {
-    fillCanvas();
+function drawGame(x, y) {
+    let gradient = new Gradiente(0, 0, cnv.width, cnv.height);
+    let gradient2 = new Gradiente(0, 0, cnv.width, cnv.height);
+
+    gradient.addColorStop(0, "black");
+    gradient.addColorStop(.5, "red");
+    gradient.addColorStop(1, "black");
+    gradient.draw();
+
+    gradient2.linearGradient(cnv.width/2, 0, cnv.width/2, cnv.height);
+    gradient2.addColorStop(0, "black");
+    gradient2.addColorStop(.5, "rgba(0,0,0,0)");
+    gradient2.addColorStop(1, "black");
+    gradient2.draw();
+
+    createRect(x-20, y-20, blockSize*8+40, blockSize*8+40, "white");
+    strokeGame(x, y, blockSize)
+    for(let i = 0; i < map.length; i++) {
+        for(let j = 0; j < map[i].length; j++) {
+            if(map[i][j] == 1) {
+                createRect(
+                    x + j * blockSize,
+                    y + i * blockSize,
+                    blockSize,
+                    blockSize,
+                    "#171717"
+                );
+            }
+        }
+    }
+}
+
+function strokeGame(x, y) {
+    ctx.save();
+    ctx.fillStyle = "#171717";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, blockSize*8, blockSize*8);
+    ctx.restore();
 }
 
 // Start Game
 setDefaultSettings();
-drawGame();
+drawLoading();

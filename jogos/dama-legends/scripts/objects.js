@@ -74,13 +74,28 @@ class Button {
         this.background.height = height;
         this.text.color = color || "white";
         this.text.size = 20;
+        this.clicked = false;
     }
 
     draw() {
+        // Save
+        let saveColor = this.background.color;
+
+        if(
+            (mouse.x >= this.background.x && mouse.x <= this.background.x + this.background.width) &&
+            (mouse.y >= this.background.y && mouse.y <= this.background.y + this.background.height)
+        ) {
+            this.background.color = "red";
+            mouse.clicked ? this.clicked = true : this.clicked = false;
+            //
+        }
         this.background.draw();
         this.text.x = this.background.x + (this.background.width/2);
         this.text.y = this.background.y + (this.background.height/2);
         this.text.draw();
+
+        // Restore
+        this.background.color = saveColor;
     }
 }
 
