@@ -86,7 +86,7 @@ class Button {
             (mouse.y >= this.background.y && mouse.y <= this.background.y + this.background.height)
         ) {
             this.background.color = "red";
-            mouse.clicked ? this.clicked = true : this.clicked = false;
+            mouse.down ? this.clicked = true : this.clicked = false;
             //
         }
         this.background.draw();

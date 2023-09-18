@@ -4,7 +4,12 @@ function getTime() {
     return new Date().getTime();
 }
 
-/*
+// Exibe valor no console do navegador
+function log(value) {
+    console.log(value);
+}
+
+/*  Explanation
     doIt: Faça isso durante o 'time'
     callback: Faça quando terminar o 'time'
     time: Tempo de animação em segundos
@@ -20,7 +25,7 @@ function timedAnimation(loop, onfinish, time) {
     }, 1000/fps);
 }
 
-/*
+/*  Explanation
     loop: Faça isso durante a 'condition'
     onfinish: Faça quando terminar a 'condition'
     condition: Condiçao de animação (function que retorna um Boolean)
@@ -56,7 +61,9 @@ function createRect(x, y, width, height, color) {
 function createCircle(x, y, radius, color) {
     ctx.save();
     ctx.fillStyle = color || "red";
+    ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI*2);
+    ctx.closePath();
     ctx.fill();
     ctx.restore();
 }

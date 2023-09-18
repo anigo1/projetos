@@ -5,7 +5,11 @@ const body = document.getElementsByTagName("body")[0];
 let mouse = {
     x: 0,
     y: 0,
-    clicked: false
+    down: false,
+    up: true,
+    click: function() {
+        return true;
+    }
 }
 let mouseScreen = { x: 0, y: 0 }
 
@@ -20,11 +24,15 @@ window.onmousemove = (e) => {
 }
 
 cnv.onmousedown = (e) => {
-    mouse.clicked = true;
+    onMouseDown(e);
+    mouse.click();
+    mouse.down = true;
+    mouse.up = false;
 }
 
 cnv.onmouseup = (e) => {
-    mouse.clicked = false;
+    mouse.down = false;
+    mouse.up = true;
 }
 
 // KEYBOARD
