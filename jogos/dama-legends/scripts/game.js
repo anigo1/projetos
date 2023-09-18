@@ -98,6 +98,9 @@ function update() {
                 pecaSelected = pecas[selectedPecaIndex];
                 pl = pecaSelected.getLine();
                 pc = pecaSelected.getColumn();
+
+                // HERE
+                /*
                 try {
                     if(
                         picked && (
@@ -116,7 +119,7 @@ function update() {
                     }
                 } catch (error) {
                     log(error)
-                }
+                } */
             }
         }
     }
