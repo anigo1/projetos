@@ -1,3 +1,36 @@
+// DOM
+const body = document.getElementsByTagName("body")[0];
+
+// Mouse Postions
+let state = 1;
+let mouse = {
+    x: 0,
+    y: 0,
+    down: false,
+    up: true
+}
+
+let mouseScreen = { x: 0, y: 0 }
+
+// Mouse Events
+function onMouseMove(e) {
+    mouseScreen.x = e.clientX;
+    mouseScreen.y = e.clientY;
+
+    mouse.x = (mouseScreen.x - cnv.getClientRects().item(0).x) * (cnv.width/cnv.getClientRects().item(0).width);
+    mouse.y = (mouseScreen.y - cnv.getClientRects().item(0).y) * (cnv.height/cnv.getClientRects().item(0).height);
+}
+
+function onMouseDown(e) {
+    mouse.down = true;
+    mouse.up = false;
+}
+
+function onMouseUp(e) {
+    mouse.down = false;
+    mouse.up = true;
+}
+
 // Useful
 function fillCanvas(color) {
     createRect(0, 0, cnv.width, cnv.height, color || "black");
@@ -42,14 +75,6 @@ function getPeca(lin, col) {
     return p;
 }
 
-function checkPecas() {
-    for(peca of pecas) {
-        if(peca.selected) selectedPecaIndex = pecas.indexOf(peca);
-        if(peca.mouseFocus) focusPecaIndex = pecas.indexOf(peca);
-        if(selectedPecaIndex != undefined && focusPecaIndex != undefined) return;
-    }
-}
-
 function changeTurn() {
     picked = false;
     (turno == "white") ? turno = "black" : turno = "white";
@@ -66,10 +91,6 @@ function removePeca(lin, col) {
 
 function movePeca(index, lin, col) {
     pecas[index].moveTo(lin, col);
-}
-
-function onMouseDown(e) {
-    // Todo
 }
 
 // default settings
@@ -176,6 +197,8 @@ function drawMenu() {
 function drawPecas() {
     for(peca of pecas) {
         peca.draw();
+        if(peca.selected) selectedPecaIndex = pecas.indexOf(peca);
+        if(peca.mouseFocus) focusPecaIndex = pecas.indexOf(peca);
     }
 }
 

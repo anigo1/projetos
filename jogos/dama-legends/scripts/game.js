@@ -60,7 +60,6 @@ function draw() {
 
 function update() {
     focusPecaIndex = undefined;
-    checkPecas();
     if(
         mouse.x >= tabuleiro.x && mouse.x <= tabuleiro.x + tabuleiro.width &&
         mouse.y >= tabuleiro.y && mouse.y <= tabuleiro.y + tabuleiro.height &&
